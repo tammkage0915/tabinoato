@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  get "users/new"
+  
+  root to: 'homes#top'
+
+  resources :users, only: [:create]
+  get 'users/sign_up', to: 'users#new', as: :new_user
+
+  get    'users/sign_in', to: 'sessions#new',     as: :new_session
+  post   'users/sign_in', to: 'sessions#create',  as: :session
+  delete 'users/sign_out', to: 'sessions#destroy', as: :destroy_session
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
