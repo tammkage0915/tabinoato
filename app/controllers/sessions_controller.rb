@@ -8,14 +8,14 @@ class SessionsController < ApplicationController
   def create
     if (user = User.find_by(name: params[:name]))&.authenticate(params[:password])
       start_new_session_for user
-      redirect_to after_authentication_url
+      redirect_to posts_path, notice: "ログインしました！"
     else
-      redirect_to new_session_path, alert: "Try another name or password."
+      redirect_to new_session_path, alert: "名前、またはパスワードが正しくありません。"
     end
   end
 
   def destroy
     terminate_session
-    redirect_to new_session_path
+    redirect_to root_path, notice: "ログアウトしました。"
   end
 end

@@ -1,0 +1,37 @@
+<h2>マイページ</h2>
+
+<% if notice %>
+  <p style="color: green;"><%= notice %></p>
+<% end %>
+
+<div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 20px;">
+  <h3>ユーザー情報</h3>
+  <p><strong>名前:</strong> <%= @user.name %></p>
+  <p><strong>メールアドレス:</strong> <%= @user.email_address %></p>
+
+  <div>
+    <%= link_to "プロフィールを編集する", edit_user_information_path %>
+  </div>
+</div>
+
+<hr>
+
+<h3>自分の投稿一覧</h3>
+<% if @posts.any? %>
+  <% @posts.each do |post| %>
+    <div style="border: 1px solid #eee; padding: 10px; margin-bottom: 10px;">
+      <h4><%= link_to post.title, post_path(post) %></h4>
+      <p><strong>場所:</strong> <%= post.location_name %></p>
+      <p><%= truncate(post.body, length: 100) %></p>
+      <small>投稿日時: <%= post.created_at.strftime("%Y/%m/%d %H:%M") %></small>
+    </div>
+  <% end %>
+<% else %>
+  <p>まだ投稿がありません。</p>
+<% end %>
+
+<hr style="margin-top: 30px;">
+
+<div style="margin-top: 20px;">
+  <%= link_to "退会手続きへ進む", unsubscribe_user_information_path, style: "color: red;" %>
+</div>

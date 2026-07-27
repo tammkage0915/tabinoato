@@ -1,0 +1,13 @@
+<h2>退会確認</h2>
+
+<p>本当に退会しますか？</p>
+<p>退会すると、これまでの投稿データなどもすべて削除され、復元することはできません。</p>
+
+<div>
+  <%= link_to "退会する", withdraw_user_information_path, 
+      data: { turbo_method: :patch, turbo_confirm: "本当に退会してよろしいですか？" }, 
+      style: "color: red; font-weight: bold;" %>
+</div>
+
+<br>
+<%= link_to "マイページへ戻る", mypage_path %>
