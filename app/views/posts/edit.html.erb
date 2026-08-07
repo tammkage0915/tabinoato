@@ -36,6 +36,10 @@
   <div>
     <%= f.submit "更新する" %>
   </div>
+
+  <div style="margin-top: 20px;">
+    <%= link_to "削除", post_path(@post), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, style: "color: red;" %>
+  </div>
 <% end %>
 
 <br>

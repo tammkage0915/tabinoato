@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  allow_unauthenticated_access only: [:index, :show]
+  
 
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :ensure_correct_user, only: [:edit, :update, :destroy]
@@ -38,7 +38,7 @@ class PostsController < ApplicationController
 
   def destroy
     @post.destroy
-    redirect_to posts_path, notice: "投稿を削除しました。"
+    redirect_to mypage_path, notice: "投稿を削除しました。"
   end
 
   private
