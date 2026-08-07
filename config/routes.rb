@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   
   root to: 'homes#top'
 
-  resources :users, only: [:create, :show]
+  
   get 'users/sign_up', to: 'users#new', as: :new_user
   get   'mypage',                     to: 'users#show',        as: :mypage
   get   'users/information/edit',    to: 'users#edit',        as: :edit_user_information
@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   get    'users/sign_in', to: 'sessions#new',     as: :new_session
   post   'users/sign_in', to: 'sessions#create',  as: :session
   delete 'users/sign_out', to: 'sessions#destroy', as: :destroy_session
-
+  resources :users, only: [:create, :show]
   resources :posts
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
