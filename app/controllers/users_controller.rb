@@ -16,7 +16,12 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = Current.user
+    if params[:id]
+      @user = User.find(params[:id])
+    else
+      @user = Current.user
+    end
+
     @posts = @user.posts.order(created_at: :desc)
   end
 

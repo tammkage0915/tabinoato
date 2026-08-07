@@ -1,4 +1,8 @@
-<h2>マイページ</h2>
+<% if @user == Current.user %>
+  <h2>マイページ</h2>
+<% else %>
+  <h2><%= @user.name %> さんのプロフィール</h2>
+<% end %>
 
 <% if notice %>
   <p style="color: green;"><%= notice %></p>
@@ -7,16 +11,20 @@
 <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 20px;">
   <h3>ユーザー情報</h3>
   <p><strong>名前:</strong> <%= @user.name %></p>
-  <p><strong>メールアドレス:</strong> <%= @user.email_address %></p>
 
-  <div>
-    <%= link_to "プロフィールを編集する", edit_user_information_path %>
-  </div>
+  
+  <% if @user == Current.user %>
+    <p><strong>メールアドレス:</strong> <%= @user.email_address %></p>
+
+    <div>
+      <%= link_to "プロフィールを編集する", edit_user_information_path %>
+    </div>
+  <% end %>
 </div>
 
 <hr>
 
-<h3>自分の投稿一覧</h3>
+<h3><%= @user == Current.user ? "自分の投稿一覧" : "#{@user.name} さんの投稿一覧" %></h3>
 <% if @posts.any? %>
   <% @posts.each do |post| %>
     <div style="border: 1px solid #eee; padding: 10px; margin-bottom: 10px;">
@@ -30,8 +38,11 @@
   <p>まだ投稿がありません。</p>
 <% end %>
 
-<hr style="margin-top: 30px;">
 
-<div style="margin-top: 20px;">
-  <%= link_to "退会手続きへ進む", unsubscribe_user_information_path, style: "color: red;" %>
-</div>
+<% if @user == Current.user %>
+  <hr style="margin-top: 30px;">
+
+  <div style="margin-top: 20px;">
+    <%= link_to "退会手続きへ進む", unsubscribe_user_information_path, style: "color: red;" %>
+  </div>
+<% end %>

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   
   root to: 'homes#top'
 
-  resources :users, only: [:create]
+  resources :users, only: [:create, :show]
   get 'users/sign_up', to: 'users#new', as: :new_user
   get   'mypage',                     to: 'users#show',        as: :mypage
   get   'users/information/edit',    to: 'users#edit',        as: :edit_user_information
