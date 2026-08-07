@@ -6,7 +6,7 @@
 
 <div>
   <h3><%= @post.title %></h3>
-  <p><strong>投稿者:</strong> <%= @post.user.name %></p>
+  <p><strong>投稿者:</strong> <%= link_to @post.user.name, user_path(@post.user) %></p>
   <p><strong>場所名:</strong> <%= @post.location_name %></p>
   <p><strong>住所:</strong> <%= @post.address %></p>
   <p><strong>本文:</strong></p>
