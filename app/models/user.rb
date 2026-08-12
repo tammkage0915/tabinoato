@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   has_secure_password
+  has_one_attached :profile_image
   has_many :sessions, dependent: :destroy
+  
+  has_many :comments, dependent: :destroy
 
   has_many :posts, dependent: :destroy
 

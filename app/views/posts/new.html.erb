@@ -27,6 +27,11 @@
     <%= f.text_field :address %>
   </div>
 
+  <div class="field">
+    <%= f.label :images, "投稿画像（複数選択可）" %><br>
+    <%= f.file_field :images, multiple: true, accept: "image/*" %>
+  </div>
+
   <div>
     <%= f.label :body, "本文" %><br>
     <%= f.text_area :body, rows: 5 %>

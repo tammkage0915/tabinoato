@@ -10,11 +10,19 @@
 
 <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 20px;">
   <h3>ユーザー情報</h3>
+  <div style="margin-bottom: 15px;">
+    <% if @user.profile_image.attached? %>
+      <%= image_tag @user.profile_image, style: "width: 100px; height: 100px; object-fit: cover; border-radius: 50%;" %>
+    <% else %>
+      <%= image_tag "no_image.jpg", style: "width: 100px; height: 100px; object-fit: cover; border-radius: 50%;" %>
+    <% end %>
+  </div>
   <p><strong>名前:</strong> <%= @user.name %></p>
 
   
   <% if @user == Current.user %>
     <p><strong>メールアドレス:</strong> <%= @user.email_address %></p>
+    <p>💬 投稿したコメント数: <%= @user.comments.count %>件</p>
 
     <div>
       <%= link_to "プロフィールを編集する", edit_user_information_path %>
