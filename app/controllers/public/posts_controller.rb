@@ -1,4 +1,4 @@
-class PostsController < ApplicationController
+class Public::PostsController < Public::ApplicationController
   allow_unauthenticated_access only: %i[ index ]
 
   before_action :set_post, only: [:show, :edit, :update, :destroy]

@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class Public::UsersController < Public::ApplicationController
   allow_unauthenticated_access only: [:new, :create]
 
   def new
