@@ -1,73 +1,120 @@
-<h2>投稿詳細</h2>
-
-<% content_for :custom_flash do %>
-  <div class="container mt-3">
-    <%= render "layouts/flash" %>
-  </div>
-<% end %>
-
-<div>
-  <h3><%= @post.title %></h3>
-  <p><strong>投稿者:</strong> <%= link_to @post.user.name, user_path(@post.user) %></p>
-  <p><strong>場所名:</strong> <%= @post.location_name %></p>
-  <p><strong>住所:</strong> <%= @post.address %></p>
-  <% if @post.images.attached? %>
-    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px;">
-      <% @post.images.each do |image| %>
-        <%= image_tag image, style: "width: 200px; height: 150px; object-fit: cover; border-radius: 8px;" %>
-      <% end %>
-    </div>
+<div class="mb-3">
+  <%= link_to posts_path, class: "text-decoration-none text-muted small" do %>
+    <i class="fa-solid fa-chevron-left me-1"></i>投稿一覧へ戻る
   <% end %>
-  <p><strong>本文:</strong></p>
-  <p><%= simple_format(@post.body) %></p>
 </div>
 
-<% if authenticated? && Current.user == @post.user %>
-  <div>
-    <%= link_to "編集", edit_post_path(@post) %> | 
-    <%= link_to "削除", post_path(@post), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
-  </div>
-<% end %>
+<article class="card shadow-sm border-0 mb-4">
+  <div class="card-body p-4">
+    <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3">
+      <div>
+        <h1 class="h2 fw-bold text-dark mb-2"><%= @post.title %></h1>
+        <div class="text-muted small d-flex align-items-center gap-3">
+          <span>
+            <i class="fa-solid fa-circle-user text-secondary me-1"></i>
+            <%= link_to @post.user.name, user_path(@post.user), class: "text-decoration-none text-dark fw-semibold" %>
+          </span>
+          <span>
+            <i class="fa-regular fa-clock me-1"></i><%= @post.created_at.strftime("%Y/%m/%d %H:%M") %>
+          </span>
+        </div>
+      </div>
 
-<hr style="margin: 30px 0;">
+      <% if authenticated? && Current.user == @post.user %>
+        <div class="d-flex gap-2">
+          <%= link_to edit_post_path(@post), class: "btn btn-outline-secondary btn-sm rounded-pill px-3" do %>
+            <i class="fa-solid fa-pen-to-square me-1"></i>編集
+          <% end %>
+          <%= link_to post_path(@post), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "btn btn-outline-danger btn-sm rounded-pill px-3" do %>
+            <i class="fa-solid fa-trash-can me-1"></i>削除
+          <% end %>
+        </div>
+      <% end %>
+    </div>
 
-<h3>コメント一覧 (<%= @comments.count %>件)</h3>
-
-<% if @comments.any? %>
-  <div style="margin-bottom: 20px;">
-    <% @comments.each do |comment| %>
-      <div style="border-bottom: 1px solid #eee; padding: 10px 0;">
-        <p style="font-size: 0.9em; color: #555; margin-bottom: 5px;">
-          <strong><%= comment.user&.name %></strong>
-          <span style="font-size: 0.8em; color: #999;">(<%= comment.created_at.strftime("%Y/%m/%d %H:%M") %>)</span>
-        </p>
-        <p style="margin: 0;"><%= simple_format(comment.body) %></p>
-
-        <% if authenticated? && comment.user == Current.user %>
-          <div style="text-align: right;">
-            <%= link_to "削除", post_comment_path(@post, comment), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, style: "color: red; font-size: 0.8em;" %>
+    <% if @post.location_name.present? || @post.address.present? %>
+      <div class="bg-light p-3 rounded-3 mb-4 d-flex flex-column gap-1">
+        <% if @post.location_name.present? %>
+          <div class="text-primary fw-bold">
+            <i class="fa-solid fa-location-dot me-2"></i><%= @post.location_name %>
+          </div>
+        <% end %>
+        <% if @post.address.present? %>
+          <div class="text-muted small ps-4">
+            <i class="fa-solid fa-map-pin me-1"></i><%= @post.address %>
           </div>
         <% end %>
       </div>
     <% end %>
-  </div>
-<% else %>
-  <p style="color: #888;">まだコメントはありません。</p>
-<% end %>
 
-<% if authenticated? %>
-  <h4>コメントを投稿する</h4>
-  <%= form_with(model: [@post, @comment], local: true) do |f| %>
-    <div style="margin-bottom: 10px;">
-      <%= f.text_area :body, rows: 3, style: "width: 100%; max-width: 500px; padding: 8px;", placeholder: "コメントを入力してください" %>
+    <% if @post.images.attached? %>
+      <div class="row g-2 mb-4">
+        <% @post.images.each do |image| %>
+          <div class="col-6 col-md-4">
+            <a href="<%= url_for(image) %>" target="_blank" rel="noopener">
+              <%= image_tag image, class: "img-fluid rounded-3 shadow-sm w-100", style: "height: 220px; object-fit: cover;" %>
+            </a>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="card-text text-dark fs-6 lh-lg border-top pt-4">
+      <%= simple_format(@post.body) %>
     </div>
-    <%= f.submit "送信", style: "padding: 8px 16px;" %>
-  <% end %>
-<% else %>
-  <p style="color: #666; font-size: 0.9em;">
-    ※ コメントを投稿するには<%= link_to "ログイン", login_path %>が必要です。
-  </p>
-<% end %>
+  </div>
+</article>
 
-<br>
-<%= link_to "投稿一覧へ戻る", posts_path %>
+<section class="card shadow-sm border-0 mb-4">
+  <div class="card-body p-4">
+    <h3 class="h5 fw-bold mb-4 border-bottom pb-2">
+      <i class="fa-regular fa-comments text-primary me-2"></i>コメント一覧
+      <span class="badge bg-secondary rounded-pill fs-7 ms-1"><%= @comments.count %>件</span>
+    </h3>
+
+    <% if @comments.any? %>
+      <div class="d-flex flex-column gap-3 mb-4">
+        <% @comments.each do |comment| %>
+          <div class="p-3 bg-light rounded-3">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div class="d-flex align-items-center gap-2">
+                <i class="fa-solid fa-circle-user text-secondary fs-5"></i>
+                <strong class="text-dark small"><%= comment.user&.name %></strong>
+                <span class="text-muted extra-small" style="font-size: 0.8rem;">
+                  (<%= comment.created_at.strftime("%Y/%m/%d %H:%M") %>)
+                </span>
+              </div>
+
+              <% if comment.user == Current.user %>
+                <%= link_to post_comment_path(@post, comment), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "btn btn-link text-danger p-0 border-0 text-decoration-none small" do %>
+                  <i class="fa-solid fa-xmark me-1"></i>削除
+                <% end %>
+              <% end %>
+            </div>
+
+            <div class="text-dark small mb-0 ps-4">
+              <%= simple_format(comment.body) %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="text-center text-muted py-4">
+        <i class="fa-regular fa-comment-dots fa-2x mb-2 d-block opacity-50"></i>
+        まだコメントはありません。最初のコメントを投稿してみましょう！
+      </div>
+    <% end %>
+
+    <hr class="my-4">
+
+    <h4 class="h6 fw-bold mb-3">コメントを投稿する</h4>
+    <%= form_with(model: [@post, @comment], local: true) do |f| %>
+      <div class="mb-3">
+        <%= f.text_area :body, rows: 3, class: "form-control", placeholder: "旅の感想や質問などを入力してください" %>
+      </div>
+      <div class="text-end">
+        <%= f.submit "コメントを送信", class: "btn btn-primary rounded-pill px-4 fw-semibold" %>
+      </div>
+    <% end %>
+  </div>
+</section>

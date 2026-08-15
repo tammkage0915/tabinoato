@@ -10,7 +10,7 @@ class Public::SessionsController < Public::ApplicationController
       start_new_session_for user
       redirect_to posts_path, status: :see_other, notice: "ログインしました！"
     else
-      redirect_to new_session_path, alert: "名前、またはパスワードが正しくありません。"
+      flash.now[:alert] = "名前、またはパスワードが正しくありません。"
       render :new, status: :unprocessable_entity
     end
   end
