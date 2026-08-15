@@ -17,6 +17,6 @@ class Admin::SessionsController < Admin::ApplicationController
 
   def destroy
     terminate_session
-    redirect_to after_logout_url
+    redirect_to after_logout_url, notice: "ログアウトしました。"
   end
 end

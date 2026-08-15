@@ -21,7 +21,7 @@ module Admin::Authentication
     end
 
     def authenticated_admin?
-      resume_session
+      current_admin.present?
     end
 
     def require_authentication
@@ -53,7 +53,7 @@ module Admin::Authentication
     end
 
     def terminate_session
-      Current.session.destroy
+      Current.session&.destroy
       cookies.delete(:admin_session_id)
     end
 end
