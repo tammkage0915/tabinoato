@@ -1,7 +1,9 @@
 <h2>投稿詳細</h2>
 
-<% if notice %>
-  <p style="color: green;"><%= notice %></p>
+<% content_for :custom_flash do %>
+  <div class="container mt-3">
+    <%= render "layouts/flash" %>
+  </div>
 <% end %>
 
 <div>

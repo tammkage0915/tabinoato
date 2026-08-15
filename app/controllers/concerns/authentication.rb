@@ -15,11 +15,12 @@ module Authentication
 
   private
     def current_user
-      Current.user
+      resume_session
+      @current_user ||= Current.user if Current.session
     end
 
     def authenticated?
-      Current.user.present?
+      current_user.present?
     end
 
     def require_authentication

@@ -4,8 +4,10 @@
   <h2><%= @user.name %> さんのプロフィール</h2>
 <% end %>
 
-<% if notice %>
-  <p style="color: green;"><%= notice %></p>
+<% content_for :custom_flash do %>
+  <div class="container mt-3">
+    <%= render "layouts/flash" %>
+  </div>
 <% end %>
 
 <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 20px;">
