@@ -22,7 +22,12 @@ class Public::UsersController < Public::ApplicationController
       @user = Current.user
     end
 
-    @posts = @user.posts.order(created_at: :desc)
+    @posts = @user.posts.order(created_at: :desc).page(params[:page]).per(6)
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   def edit

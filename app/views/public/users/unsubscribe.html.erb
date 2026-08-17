@@ -1,13 +1,42 @@
-<h2>退会確認</h2>
+<div class="row justify-content-center my-4">
+  <div class="col-md-8 col-lg-6">
+    <div class="card shadow-sm border-0">
+      <div class="card-body p-4 p-md-5 text-center">
+        
+        <div class="text-danger mb-3">
+          <i class="fa-solid fa-triangle-exclamation fa-3x"></i>
+        </div>
 
-<p>本当に退会しますか？</p>
-<p>退会すると、これまでの投稿データなどもすべて削除され、復元することはできません。</p>
+        <h2 class="h3 fw-bold text-dark mb-3">退会手続きの確認</h2>
 
-<div>
-  <%= link_to "退会する", withdraw_user_information_path, 
-      data: { turbo_method: :patch, turbo_confirm: "本当に退会してよろしいですか？" }, 
-      style: "color: red; font-weight: bold;" %>
+        <div class="alert alert-danger text-start mb-4 p-3 rounded-3 small">
+          <div class="fw-bold mb-1">
+            <i class="fa-solid fa-circle-exclamation me-1"></i>ご注意ください
+          </div>
+          <div>
+            退会手続きを行うと、これまでの投稿データやコメントなど、すべての情報が削除され、復元することはできなくなります。
+          </div>
+        </div>
+
+        <p class="text-muted small mb-4">
+          本当に退会処理を続けてもよろしいですか？
+        </p>
+
+        <div class="d-grid gap-2 col-10 mx-auto">
+          <%= link_to mypage_path, class: "btn btn-secondary rounded-pill py-2 fw-semibold shadow-sm" do %>
+            <i class="fa-solid fa-arrow-left me-1"></i> 退会せずにマイページへ戻る
+          <% end %>
+
+          <div class="mt-2">
+            <%= link_to withdraw_user_information_path, 
+                        data: { turbo_method: :patch, turbo_confirm: "本当に退会してよろしいですか？" }, 
+                        class: "btn btn-outline-danger btn-sm rounded-pill px-4 fw-semibold border-0 text-decoration-underline" do %>
+              <i class="fa-solid fa-user-xmark me-1"></i> 退会する
+            <% end %>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>
-
-<br>
-<%= link_to "マイページへ戻る", mypage_path %>

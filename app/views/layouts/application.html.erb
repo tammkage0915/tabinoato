@@ -28,24 +28,24 @@
     <header>
       <nav class="navbar navbar-expand-lg navbar-light bg-light-subtle border-bottom shadow-sm">
         <div class="container">
-          <%= link_to root_path, class: "navbar-brand d-flex align-items-center gap-2 font-weight-bold" do %>
+          <%= link_to root_path, class: "navbar-brand d-flex align-items-center gap-2 font-weight-bold", data: { turbo: false } do %>
             <i class="fa-solid fa-plane-departure text-info"></i>
             <span>tabinoato</span>
           <% end %>
 
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" id="navbar-toggler-btn" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
 
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <%= link_to root_path, class: "nav-link" do %>
+                <%= link_to root_path, class: "nav-link", data: { turbo: false } do %>
                   <i class="fa-solid fa-house me-1"></i> Top
                 <% end %>
               </li>
               <li class="nav-item">
-                <%= link_to posts_path, class: "nav-link" do %>
+                <%= link_to posts_path, class: "nav-link", data: { turbo: false } do %>
                   <i class="fa-solid fa-images me-1"></i> 投稿一覧
                 <% end %>
               </li>
@@ -54,28 +54,28 @@
             <ul class="navbar-nav align-items-lg-center gap-2">
               <% if authenticated? %>
                 <li class="nav-item">
-                  <%= link_to new_post_path, class: "nav-link" do %>
+                  <%= link_to new_post_path, class: "nav-link", data: { turbo: false } do %>
                     <i class="fa-solid fa-pen-to-square me-1"></i> 新規投稿
                   <% end %>
                 </li>
                 <li class="nav-item">
-                  <%= link_to mypage_path, class: "nav-link" do %>
+                  <%= link_to mypage_path, class: "nav-link", data: { turbo: false } do %>
                     <i class="fa-solid fa-user me-1"></i> マイページ
                   <% end %>
                 </li>
                 <li class="nav-item">
-                  <%= link_to destroy_session_path, data: { turbo_method: :delete }, class: "nav-link text-danger-emphasis" do %>
+                  <%= button_to destroy_session_path, method: :delete, class: "btn btn-link nav-link text-danger-emphasis p-0 border-0 text-decoration-none" do %>
                     <i class="fa-solid fa-right-from-bracket me-1"></i> ログアウト
                   <% end %>
                 </li>
               <% else %>
                 <li class="nav-item">
-                  <%= link_to new_user_path, class: "btn btn-outline-primary btn-sm rounded-pill px-3 fw-semibold" do %>
+                  <%= link_to new_user_path, class: "btn btn-outline-primary btn-sm rounded-pill px-3 fw-semibold", data: { turbo: false } do %>
                     <i class="fa-solid fa-user-plus me-1"></i> 新規登録
                   <% end %>
                 </li>
                 <li class="nav-item">
-                  <%= link_to new_session_path, class: "btn btn-primary btn-sm" do %>
+                  <%= link_to new_session_path, class: "btn btn-primary btn-sm", data: { turbo: false } do %>
                     <i class="fa-solid fa-right-to-bracket me-1"></i> ログイン
                   <% end %>
                 </li>
@@ -94,7 +94,7 @@
 
 
 
-    <main>
+    <main class="container my-4 flex-grow-1">
       <%= yield %>
     </main>
   

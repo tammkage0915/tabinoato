@@ -3,23 +3,25 @@
 <div class="position-relative overflow-hidden rounded-4 shadow-sm mb-4 text-white">
   <%= image_tag "hero1.jpg", class: "w-100 object-fit-cover", style: "height: 420px; object-position: bottom; filter: brightness(0.7);", alt: "たびのあとメイン画像" %>
   
-  <div class="position-absolute top-50 start-50 translate-middle text-center w-100 px-3">
-    <h1 class="display-4 fw-bold mb-3 drop-shadow">
-      <i class="fa-solid fa-plane-departure me-2"></i>tabinoato
-    </h1>
-    <p class="fs-5 mb-4 fw-bold text-white d-inline-block px-3 py-1 rounded-pill" style="text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9); background: rgba(0, 0, 0, 0.25);">
-      旅の思い出や足跡を記録・共有するWebアプリケーションです。
-    </p>
-    <% unless authenticated? %>
-      <div class="d-flex justify-content-center gap-3">
-        <%= link_to new_user_path, class: "btn btn-primary btn-lg rounded-pill px-4 fw-semibold shadow-sm" do %>
-          <i class="fa-solid fa-user-plus me-1"></i> 今すぐはじめる
-        <% end %>
-        <%= link_to posts_path, class: "btn btn-outline-light btn-lg rounded-pill px-4 fw-semibold" do %>
-          <i class="fa-solid fa-images me-1"></i> 投稿一覧を見る
-        <% end %>
-      </div>
-    <% end %>
+  <div class="position-absolute top-50 start-50 translate-middle text-center w-100">
+    <div class="px-3">
+      <h1 class="display-4 fw-bold mb-3 drop-shadow">
+        <i class="fa-solid fa-plane-departure me-2"></i>tabinoato
+      </h1>
+      <p class="fs-5 mb-4 fw-bold text-white d-inline-block px-3 py-1 rounded-pill" style="text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9); background: rgba(0, 0, 0, 0.25);">
+        旅の思い出や足跡を記録・共有するWebアプリケーションです。
+      </p>
+      <% unless authenticated? %>
+        <div class="d-flex justify-content-center gap-3">
+          <%= link_to new_user_path, class: "btn btn-primary btn-lg rounded-pill px-4 fw-semibold shadow-sm" do %>
+            <i class="fa-solid fa-user-plus me-1"></i> 今すぐはじめる
+          <% end %>
+          <%= link_to posts_path, class: "btn btn-outline-light btn-lg rounded-pill px-4 fw-semibold" do %>
+            <i class="fa-solid fa-images me-1"></i> 投稿一覧を見る
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
 
@@ -27,7 +29,7 @@
   <%= render "layouts/flash" %>
 </div>
 
-<section class="py-4 my-4">
+<section class="container py-4 my-4">
   <div class="text-center mb-5">
     <h2 class="h3 fw-bold text-dark mb-2">「tabinoato」でできること</h2>
     <p class="text-muted">旅行の思い出を写真やコメントと一緒に残したり、他のユーザーが行ったおすすめスポットをチェックできます。</p>
@@ -79,11 +81,13 @@
 </section>
 
 <% unless authenticated? %>
-  <div class="bg-primary bg-opacity-10 rounded-4 p-5 text-center my-5">
-    <h3 class="fw-bold mb-3">あなたも旅の記録をはじめてみませんか？</h3>
-    <p class="text-muted mb-4">登録は無料ですぐに使い始められます。</p>
-    <%= link_to new_user_path, class: "btn btn-primary rounded-pill px-5 py-2 fw-semibold shadow-sm" do %>
-      <i class="fa-solid fa-user-plus me-1"></i> 無料会員登録をする
-    <% end %>
+  <div class="container">
+    <div class="bg-primary bg-opacity-10 rounded-4 p-5 text-center my-5">
+      <h3 class="fw-bold mb-3">あなたも旅の記録をはじめてみませんか？</h3>
+      <p class="text-muted mb-4">登録は無料ですぐに使い始められます。</p>
+      <%= link_to new_user_path, class: "btn btn-primary rounded-pill px-5 py-2 fw-semibold shadow-sm" do %>
+        <i class="fa-solid fa-user-plus me-1"></i> 無料会員登録をする
+      <% end %>
+    </div>
   </div>
 <% end %>

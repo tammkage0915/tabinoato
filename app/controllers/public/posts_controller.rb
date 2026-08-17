@@ -11,6 +11,13 @@ class Public::PostsController < Public::ApplicationController
   else
     @posts = Post.order(created_at: :desc)
   end
+
+  @posts = @posts.page(params[:page]).per(6)
+
+  respond_to do |format|
+    format.html
+    format.turbo_stream
+  end
 end
 
   def show

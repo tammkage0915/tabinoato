@@ -19,7 +19,8 @@ Rails.application.routes.draw do
 
     get    'users/sign_in', to: 'sessions#new',     as: :new_session
     post   'users/sign_in', to: 'sessions#create',  as: :session
-    delete 'users/sign_out', to: 'sessions#destroy', as: :destroy_session
+    get 'users/sign_out', to: 'sessions#destroy', as: :destroy_session
+    delete 'users/sign_out', to: 'sessions#destroy'
     resources :users, only: [:create, :show]
     resources :posts do
       resources :comments, only: %i[create destroy]
