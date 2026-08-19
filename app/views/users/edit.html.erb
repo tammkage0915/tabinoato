@@ -22,6 +22,19 @@
     <%= f.email_field :email_address %>
   </div>
 
+  <div class="field">
+    <%= f.label :profile_image, "プロフィール画像" %>
+    <%= f.file_field :profile_image, accept: "image/*" %>
+  </div>
+
+  <div style="margin: 10px 0;">
+  <% if @user.profile_image.attached? %>
+    <%= image_tag @user.profile_image, id: "image-preview", style: "width: 100px; height: 100px; object-fit: cover; border-radius: 50%;" %>
+  <% else %>
+    <%= image_tag "no_image.jpg", id: "image-preview", style: "width: 100px; height: 100px; object-fit: cover; border-radius: 50%;" %>
+  <% end %>
+</div>
+
   <br>
   <div>
     <%= f.submit "更新する" %>
