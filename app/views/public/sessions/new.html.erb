@@ -7,7 +7,7 @@
           <i class="fa-solid fa-right-to-bracket text-primary me-2"></i>ログイン
         </h2>
 
-        <%= form_with url: session_path, data: { turbo: false } do |f| %>
+        <%= form_with url: session_path, data: { turbo: false }, html: { novalidate: true } do |f| %>
           
           <div class="mb-3">
             <%= f.label :name, "名前", class: "form-label fw-semibold" %>

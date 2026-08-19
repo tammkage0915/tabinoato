@@ -51,8 +51,10 @@ end
   end
 
   def destroy
-    @post.destroy
-    redirect_to mypage_path, notice: "投稿を削除しました。"
+    @post = Post.find(params[:id])
+    @post.destroy!
+
+    redirect_to mypage_path, status: :see_other, notice: "投稿を削除しました！"
   end
 
   private

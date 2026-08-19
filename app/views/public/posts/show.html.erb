@@ -21,11 +21,11 @@
       </div>
 
       <% if authenticated? && Current.user == @post.user %>
-        <div class="d-flex gap-2">
+        <div class="d-flex gap-2 align-items-center">
           <%= link_to edit_post_path(@post), class: "btn btn-outline-secondary btn-sm rounded-pill px-3" do %>
             <i class="fa-solid fa-pen-to-square me-1"></i>編集
           <% end %>
-          <%= link_to post_path(@post), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "btn btn-outline-danger btn-sm rounded-pill px-3" do %>
+          <%= button_to post_path(@post), method: :delete, data: { turbo: false }, onclick: "return confirm('本当に削除しますか？');", class: "btn btn-outline-danger btn-sm rounded-pill px-3" do %>
             <i class="fa-solid fa-trash-can me-1"></i>削除
           <% end %>
         </div>
@@ -86,7 +86,7 @@
               </div>
 
               <% if comment.user == Current.user %>
-                <%= link_to post_comment_path(@post, comment), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "btn btn-link text-danger p-0 border-0 text-decoration-none small" do %>
+                <%= button_to post_comment_path(@post, comment), method: :delete, data: { turbo: false }, onclick: "return confirm('コメントを削除しますか？');", class: "btn btn-link text-danger p-0 border-0 text-decoration-none small d-inline" do %>
                   <i class="fa-solid fa-xmark me-1"></i>削除
                 <% end %>
               <% end %>
