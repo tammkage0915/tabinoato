@@ -1,0 +1,15 @@
+<%# 1. 取得した新しい投稿カードを #posts-grid の末尾に追加 %>
+<%= turbo_stream.append "posts-grid", partial: "public/posts/post", collection: @posts %>
+
+<%# 2. 「もっと見る」ボタンエリアを更新（最終ページならボタンが消えます） %>
+<%= turbo_stream.replace "load-more-button" do %>
+  <div id="load-more-button" class="text-center mt-5">
+    <% unless @posts.last_page? %>
+      <%= link_to posts_path(page: @posts.next_page), 
+                  data: { turbo_stream: true }, 
+                  class: "btn btn-outline-primary rounded-pill px-5 py-2 fw-semibold shadow-sm" do %>
+        <i class="fa-solid fa-angles-down me-1"></i>もっと見る
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

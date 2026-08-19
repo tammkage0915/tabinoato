@@ -1,0 +1,74 @@
+<div class="mb-3">
+  <%= link_to mypage_path, class: "text-decoration-none text-muted small" do %>
+    <i class="fa-solid fa-chevron-left me-1"></i>マイページに戻る
+  <% end %>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-md-10 col-lg-8">
+    <div class="card shadow-sm border-0">
+      <div class="card-body p-4 p-md-5">
+        
+        <h2 class="h3 fw-bold text-dark mb-4 border-bottom pb-3">
+          <i class="fa-solid fa-user-pen text-primary me-2"></i>プロフィールの編集
+        </h2>
+
+        <% if @user.errors.any? %>
+          <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+            <div class="fw-bold mb-2">
+              <i class="fa-solid fa-triangle-exclamation me-2"></i><%= @user.errors.count %>件のエラーが発生しました
+            </div>
+            <ul class="mb-0 ps-3 small">
+              <% @user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <% end %>
+
+        <%= form_with model: @user, url: update_user_information_path, method: :patch, local: true do |f| %>
+          
+          <div class="mb-4 text-center">
+            <div class="mb-3">
+              <% if @user.profile_image.attached? %>
+                <%= image_tag @user.profile_image, id: "image-preview", class: "rounded-circle shadow-sm border", style: "width: 120px; height: 120px; object-fit: cover;" %>
+              <% else %>
+                <%= image_tag "no_image.jpg", id: "image-preview", class: "rounded-circle shadow-sm border", style: "width: 120px; height: 120px; object-fit: cover;" %>
+              <% end %>
+            </div>
+            
+            <div class="d-flex justify-content-center">
+              <div style="max-width: 320px;" class="w-100">
+                <%= f.label :profile_image, class: "form-label small text-muted fw-semibold" do %>
+                  <i class="fa-solid fa-camera me-1"></i>プロフィール画像を選択
+                <% end %>
+                <%= f.file_field :profile_image, accept: "image/*", class: "form-control form-control-sm" %>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :name, class: "form-label fw-semibold" do %>
+              名前 <span class="badge bg-danger ms-1">必須</span>
+            <% end %>
+            <%= f.text_field :name, class: "form-control", placeholder: "ユーザー名を入力してください" %>
+          </div>
+
+          <div class="mb-4">
+            <%= f.label :email_address, class: "form-label fw-semibold" do %>
+              メールアドレス <span class="badge bg-danger ms-1">必須</span>
+            <% end %>
+            <%= f.email_field :email_address, class: "form-control", placeholder: "example@example.com" %>
+          </div>
+
+          <div class="d-grid gap-2 pt-2">
+            <%= f.submit "更新する", class: "btn btn-primary rounded-pill fw-semibold shadow-sm py-2" %>
+          </div>
+
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<%= turbo_stream.append "posts-grid", partial: "public/posts/post", collection: @posts %>
+
+<%= turbo_stream.replace "load-more-button" do %>
+  <div id="load-more-button" class="text-center mt-5">
+    <% unless @posts.last_page? %>
+      <%= link_to url_for(page: @posts.next_page), 
+                  data: { turbo_stream: true }, 
+                  class: "btn btn-outline-primary rounded-pill px-5 py-2 fw-semibold shadow-sm" do %>
+        <i class="fa-solid fa-angles-down me-1"></i>もっと見る
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

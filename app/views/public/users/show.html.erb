@@ -1,0 +1,93 @@
+<div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+  <h2 class="h3 fw-bold mb-0 text-dark">
+    <% if @user == Current.user %>
+      <i class="fa-solid fa-user text-primary me-2"></i>マイページ
+    <% else %>
+      <i class="fa-solid fa-user text-primary me-2"></i><%= @user.name %> さんのプロフィール
+    <% end %>
+  </h2>
+</div>
+
+<div class="card shadow-sm border-0 mb-5">
+  <div class="card-body p-4">
+    <div class="row align-items-center g-4">
+      
+      <div class="col-12 col-md-auto text-center">
+        <% if @user.profile_image.attached? %>
+          <%= image_tag @user.profile_image, class: "rounded-circle shadow-sm", style: "width: 110px; height: 110px; object-fit: cover;" %>
+        <% else %>
+          <%= image_tag "no_image.jpg", class: "rounded-circle shadow-sm", style: "width: 110px; height: 110px; object-fit: cover;" %>
+        <% end %>
+      </div>
+
+      <div class="col-12 col-md">
+        <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-2">
+          <div>
+            <h3 class="h4 fw-bold text-dark mb-1"><%= @user.name %></h3>
+            <% if @user == Current.user %>
+              <div class="text-muted small">
+                <i class="fa-regular fa-envelope me-1"></i><%= @user.email_address %>
+              </div>
+            <% end %>
+          </div>
+
+          <% if @user == Current.user %>
+            <%= link_to edit_user_information_path, class: "btn btn-outline-primary btn-sm rounded-pill px-3 fw-semibold" do %>
+              <i class="fa-solid fa-user-pen me-1"></i>プロフィールを編集
+            <% end %>
+          <% end %>
+        </div>
+
+        <div class="d-flex gap-3 mt-3 pt-3 border-top text-muted small">
+          <div>
+            <i class="fa-solid fa-images text-primary me-1"></i>
+            投稿数: <strong class="text-dark fs-6"><%= @posts.total_count %></strong> 件
+          </div>
+          <% if @user == Current.user %>
+            <div>
+              <i class="fa-regular fa-comments text-success me-1"></i>
+              コメント数: <strong class="text-dark fs-6"><%= @user.comments.count %></strong> 件
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="mb-4">
+  <h3 class="h5 fw-bold text-dark mb-3">
+    <i class="fa-solid fa-map-location-dot text-primary me-2"></i>
+    <%= @user == Current.user ? "自分の投稿一覧" : "#{@user.name} さんの投稿一覧" %>
+  </h3>
+
+  <% if @posts.any? %>
+    <div id="posts-grid" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <%= render partial: "public/posts/post", collection: @posts %>
+    </div>
+
+    <div id="load-more-button" class="text-center mt-5">
+      <% unless @posts.last_page? %>
+        <%= link_to url_for(page: @posts.next_page), 
+                    data: { turbo_stream: true }, 
+                    class: "btn btn-outline-primary rounded-pill px-5 py-2 fw-semibold shadow-sm" do %>
+          <i class="fa-solid fa-angles-down me-1"></i>もっと見る
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="card bg-light border-0 py-5 text-center text-muted">
+      <i class="fa-solid fa-folder-open fa-3x mb-3 opacity-50"></i>
+      <p class="mb-0">まだ投稿がありません。</p>
+    </div>
+  <% end %>
+</div>
+
+<% if @user == Current.user %>
+  <div class="mt-5 pt-4 border-top text-end">
+    <%= link_to unsubscribe_user_information_path, class: "text-danger small text-decoration-none" do %>
+      <i class="fa-solid fa-triangle-exclamation me-1"></i>退会手続きへ進む
+    <% end %>
+  </div>
+<% end %>

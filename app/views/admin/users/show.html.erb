@@ -1,0 +1,20 @@
+<h1>ユーザー詳細 (ID: <%= @user.id %>)</h1>
+
+<div style="border: 1px solid #ccc; padding: 20px; margin-bottom: 20px; border-radius: 8px; max-width: 500px;">
+  <p><strong>名前:</strong> <%= @user.name %></p>
+  <p><strong>メールアドレス:</strong> <%= @user.email_address %></p>
+  <p><strong>登録日時:</strong> <%= @user.created_at.strftime("%Y/%m/%d %H:%M") %></p>
+  <p><strong>投稿数:</strong> <%= @user.posts.count %>件</p>
+  <p><strong>コメント数:</strong> <%= @user.comments.count %>件</p>
+
+  <hr style="margin: 20px 0;">
+
+  <%= link_to 'このユーザーを削除（退会）', 
+              admin_user_path(@user), 
+              data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' }, 
+              style: "color: red;" %>
+</div>
+
+<div>
+  <%= link_to '一覧に戻る', admin_dashboards_path %>
+</div>

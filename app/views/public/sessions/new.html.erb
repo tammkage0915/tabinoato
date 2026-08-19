@@ -1,0 +1,48 @@
+<div class="row justify-content-center my-4">
+  <div class="col-md-8 col-lg-6">
+    <div class="card shadow-sm border-0">
+      <div class="card-body p-4 p-md-5">
+        
+        <h2 class="h3 fw-bold text-dark text-center mb-4 border-bottom pb-3">
+          <i class="fa-solid fa-right-to-bracket text-primary me-2"></i>ログイン
+        </h2>
+
+        <%= form_with url: session_path, data: { turbo: false } do |f| %>
+          
+          <div class="mb-3">
+            <%= f.label :name, "名前", class: "form-label fw-semibold" %>
+            <div class="input-group">
+              <span class="input-group-text bg-light text-muted">
+                <i class="fa-solid fa-user"></i>
+              </span>
+              <%= f.text_field :name, value: params[:name], required: true, autofocus: true, class: "form-control", placeholder: "ユーザー名を入力" %>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <%= f.label :password, "パスワード", class: "form-label fw-semibold" %>
+            <div class="input-group">
+              <span class="input-group-text bg-light text-muted">
+                <i class="fa-solid fa-lock"></i>
+              </span>
+              <%= f.password_field :password, required: true, class: "form-control", placeholder: "パスワードを入力" %>
+            </div>
+          </div>
+
+          <div class="d-grid gap-2 pt-2">
+            <%= f.submit "ログイン", class: "btn btn-primary rounded-pill fw-semibold shadow-sm py-2 fs-6" %>
+          </div>
+
+        <% end %>
+
+        <div class="text-center mt-4 pt-3 border-top">
+          <p class="small text-muted mb-0">
+            アカウントをお持ちでないですか？
+            <%= link_to "新規会員登録はこちら", new_user_path, class: "fw-semibold text-decoration-none ms-1" %>
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

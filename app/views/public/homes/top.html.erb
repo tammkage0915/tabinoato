@@ -1,0 +1,93 @@
+<% provide :skip_default_flash, true %>
+
+<div class="position-relative overflow-hidden rounded-4 shadow-sm mb-4 text-white">
+  <%= image_tag "hero1.jpg", class: "w-100 object-fit-cover", style: "height: 420px; object-position: bottom; filter: brightness(0.7);", alt: "たびのあとメイン画像" %>
+  
+  <div class="position-absolute top-50 start-50 translate-middle text-center w-100">
+    <div class="px-3">
+      <h1 class="display-4 fw-bold mb-3 drop-shadow">
+        <i class="fa-solid fa-plane-departure me-2"></i>tabinoato
+      </h1>
+      <p class="fs-5 mb-4 fw-bold text-white d-inline-block px-3 py-1 rounded-pill" style="text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9); background: rgba(0, 0, 0, 0.25);">
+        旅の思い出や足跡を記録・共有するWebアプリケーションです。
+      </p>
+      <% unless authenticated? %>
+        <div class="d-flex justify-content-center gap-3">
+          <%= link_to new_user_path, class: "btn btn-primary btn-lg rounded-pill px-4 fw-semibold shadow-sm" do %>
+            <i class="fa-solid fa-user-plus me-1"></i> 今すぐはじめる
+          <% end %>
+          <%= link_to posts_path, class: "btn btn-outline-light btn-lg rounded-pill px-4 fw-semibold" do %>
+            <i class="fa-solid fa-images me-1"></i> 投稿一覧を見る
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="container my-3">
+  <%= render "layouts/flash" %>
+</div>
+
+<section class="container py-4 my-4">
+  <div class="text-center mb-5">
+    <h2 class="h3 fw-bold text-dark mb-2">「tabinoato」でできること</h2>
+    <p class="text-muted">旅行の思い出を写真やコメントと一緒に残したり、他のユーザーが行ったおすすめスポットをチェックできます。</p>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card border-0 bg-light shadow-sm h-100 p-3 text-center">
+        <div class="card-body">
+          <div class="feature-icon bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+            <i class="fa-solid fa-camera-retro fa-xl"></i>
+          </div>
+          <h3 class="h5 fw-bold mb-2">旅の思い出を残す</h3>
+          <p class="card-text text-muted small">
+            訪れた場所の写真やタイトル、感想をセットで簡単に記録・保存できます。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card border-0 bg-light shadow-sm h-100 p-3 text-center">
+        <div class="card-body">
+          <div class="feature-icon bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+            <i class="fa-solid fa-compass fa-xl"></i>
+          </div>
+          <h3 class="h5 fw-bold mb-2">スポットを探す</h3>
+          <p class="card-text text-muted small">
+            みんなの投稿から行きたい場所や話題のスポットをキーワードで検索できます。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card border-0 bg-light shadow-sm h-100 p-3 text-center">
+        <div class="card-body">
+          <div class="feature-icon bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+            <i class="fa-regular fa-comments fa-xl"></i>
+          </div>
+          <h3 class="h5 fw-bold mb-2">コメントで交流する</h3>
+          <p class="card-text text-muted small">
+            気になった投稿にコメントを残して、旅好き同士で感想や情報を共有できます。
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<% unless authenticated? %>
+  <div class="container">
+    <div class="bg-primary bg-opacity-10 rounded-4 p-5 text-center my-5">
+      <h3 class="fw-bold mb-3">あなたも旅の記録をはじめてみませんか？</h3>
+      <p class="text-muted mb-4">登録は無料ですぐに使い始められます。</p>
+      <%= link_to new_user_path, class: "btn btn-primary rounded-pill px-5 py-2 fw-semibold shadow-sm" do %>
+        <i class="fa-solid fa-user-plus me-1"></i> 無料会員登録をする
+      <% end %>
+    </div>
+  </div>
+<% end %>
