@@ -39,6 +39,10 @@ end
     end
   end
 
+  def bookmarks
+    @bookmark_posts = Current.user.bookmark_posts.order(created_at: :desc)
+  end
+
   def edit
   end
 

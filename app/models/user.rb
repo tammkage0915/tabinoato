@@ -7,6 +7,10 @@ class User < ApplicationRecord
 
   has_many :posts, dependent: :destroy
 
+  has_many :favorites, dependent: :destroy
+  
+  has_many :bookmark_posts, through: :favorites, source: :post
+
   validates :name, presence: true, uniqueness: true
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
