@@ -20,6 +20,9 @@ class Post < ApplicationRecord
     favorites.exists?(user_id: user&.id)
   end
 
+  geocoded_by :address
+  after_validation :geocode, if: :will_save_change_to_address?
+
   validates :title, presence: true
   validates :body, presence: true
 end

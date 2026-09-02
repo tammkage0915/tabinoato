@@ -74,6 +74,6 @@ end
   end
 
   def post_params
-    params.require(:post).permit(:title, :body, :address, :location_name, images: [])
+    params.require(:post).permit(:title, :body, :address, :location_name, :latitude, :longitude, images: [])
   end
 end
