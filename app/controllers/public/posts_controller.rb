@@ -61,6 +61,7 @@ end
     redirect_to mypage_path, status: :see_other, notice: "投稿を削除しました！"
   end
 
+
   private
 
   def set_post
