@@ -9,7 +9,7 @@
     <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3">
       <div>
         <h1 class="h2 fw-bold text-dark mb-2"><%= @post.title %></h1>
-        <div class="text-muted small d-flex align-items-center gap-3">
+        <div class="text-muted small d-flex align-items-center gap-3 flex-wrap">
           <span>
             <i class="fa-solid fa-circle-user text-secondary me-1"></i>
             <%= link_to @post.user.name, user_path(@post.user), class: "text-decoration-none text-dark fw-semibold" %>
@@ -17,6 +17,10 @@
           <span>
             <i class="fa-regular fa-clock me-1"></i><%= @post.created_at.strftime("%Y/%m/%d %H:%M") %>
           </span>
+          
+          <div class="ms-1">
+            <%= render "public/favorites/favorite_button", post: @post %>
+          </div>
         </div>
       </div>
 
@@ -62,6 +66,16 @@
     <div class="card-text text-dark fs-6 lh-lg border-top pt-4">
       <%= simple_format(@post.body) %>
     </div>
+
+    <% if @post.latitude.present? && @post.longitude.present? %>
+      <div class="mt-4 pt-3 border-top">
+        <h5 class="fw-bold fs-6 mb-3 text-dark">
+          <i class="fa-solid fa-map-location-dot text-primary me-2"></i>スポットの地図
+        </h5>
+        <div id="map" style="height: 350px; width: 100%;" class="rounded-3 shadow-sm"></div>
+      </div>
+    <% end %>
+
   </div>
 </article>
 
@@ -118,3 +132,28 @@
     <% end %>
   </div>
 </section>
+
+<% if @post.latitude.present? && @post.longitude.present? %>
+  <script>
+    function initMap() {
+      const postLocation = { lat: <%= @post.latitude %>, lng: <%= @post.longitude %> };
+
+      const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 15,
+        center: postLocation,
+      });
+
+      new google.maps.Marker({
+        position: postLocation,
+        map: map,
+        title: "<%= j @post.title %>",
+      });
+    }
+
+    $(document).on('turbo:load', function() {
+      if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
+        initMap();
+      }
+    });
+  </script>
+<% end %>

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get "favorites/create"
+  get "favorites/destroy"
+  get "favorites/index"
   namespace :admin do
     resource :session, only: [:new, :create, :destroy]
     get 'dashboards', to: 'dashboards#index'
@@ -24,6 +27,12 @@ Rails.application.routes.draw do
     resources :users, only: [:create, :show]
     resources :posts do
       resources :comments, only: %i[create destroy]
+
+      resource :favorite, only: %i[create destroy]
+
+      collection do
+        get :bookmarks
+      end
     end
   end
 

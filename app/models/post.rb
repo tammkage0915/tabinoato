@@ -13,6 +13,16 @@ class Post < ApplicationRecord
     end
   }
 
+  has_many :favorites, dependent: :destroy
+  has_many :favorited_users, through: :favorites, source: :user
+
+  def favorited_by?(user)
+    favorites.exists?(user_id: user&.id)
+  end
+
+  geocoded_by :address
+  after_validation :geocode, if: :will_save_change_to_address?
+
   validates :title, presence: true
   validates :body, presence: true
 end

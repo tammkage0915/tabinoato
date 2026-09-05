@@ -1,0 +1,9 @@
+<% if post.favorited_by?(Current.user) %>
+  <%= button_to post_favorite_path(post), method: :delete, data: { turbo: false }, class: "btn btn-link text-danger p-0 border-0 text-decoration-none" do %>
+    <i class="fa-solid fa-heart me-1"></i><%= post.favorites.count %>
+  <% end %>
+<% else %>
+  <%= button_to post_favorite_path(post), method: :post, data: { turbo: false }, class: "btn btn-link text-secondary p-0 border-0 text-decoration-none" do %>
+    <i class="fa-regular fa-heart me-1"></i><%= post.favorites.count %>
+  <% end %>
+<% end %>
