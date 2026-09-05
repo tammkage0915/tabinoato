@@ -56,9 +56,17 @@
   </div>
 </div>
 
-<div class="mb-4">
+<div class="mb-5">
   <h3 class="h5 fw-bold text-dark mb-3">
     <i class="fa-solid fa-map-location-dot text-primary me-2"></i>
+    <%= @user == Current.user ? "自分の足跡マップ" : "#{@user.name} さんの足跡マップ" %>
+  </h3>
+  <div id="my_footprint_map" style="height: 400px; width: 100%;" class="rounded-3 shadow-sm border"></div>
+</div>
+
+<div class="mb-4">
+  <h3 class="h5 fw-bold text-dark mb-3">
+    <i class="fa-solid fa-list-ul text-primary me-2"></i>
     <%= @user == Current.user ? "自分の投稿一覧" : "#{@user.name} さんの投稿一覧" %>
   </h3>
 
@@ -91,3 +99,64 @@
     <% end %>
   </div>
 <% end %>
+
+<script>
+  function initMyMap() {
+    const mapElement = document.getElementById("my_footprint_map");
+    if (!mapElement) return;
+
+    const posts = <%= raw @map_posts.to_json(only: [:id, :title, :latitude, :longitude, :location_name]) %>;
+
+    let defaultCenter = { lat: 36.204824, lng: 138.252924 };
+    let defaultZoom = 5;
+
+    if (posts.length > 0) {
+      defaultCenter = { lat: Number(posts[0].latitude), lng: Number(posts[0].longitude) };
+      defaultZoom = 9;
+    }
+
+    const map = new google.maps.Map(mapElement, {
+      zoom: defaultZoom,
+      center: defaultCenter,
+    });
+
+    const bounds = new google.maps.LatLngBounds();
+    const infoWindow = new google.maps.InfoWindow();
+
+    posts.forEach(post => {
+      if (!post.latitude || !post.longitude) return;
+
+      const position = { lat: Number(post.latitude), lng: Number(post.longitude) };
+
+      const marker = new google.maps.Marker({
+        position: position,
+        map: map,
+        title: post.title
+      });
+
+      marker.addListener("click", () => {
+        const contentString = `
+          <div style="padding: 5px;">
+            <h6 style="margin: 0 0 5px 0; font-weight: bold; font-size: 14px;">${post.title}</h6>
+            ${post.location_name ? `<p style="margin: 0 0 8px 0; font-size: 12px; color: #666;">📍 ${post.location_name}</p>` : ''}
+            <a href="/posts/${post.id}" class="btn btn-sm btn-primary text-white" style="font-size: 11px; padding: 2px 8px; text-decoration: none; display: inline-block; rounded: 4px;">詳細を見る</a>
+          </div>
+        `;
+        infoWindow.setContent(contentString);
+        infoWindow.open(map, marker);
+      });
+
+      bounds.extend(position);
+    });
+
+    if (posts.length > 1) {
+      map.fitBounds(bounds);
+    }
+  }
+
+  document.addEventListener("turbo:load", function() {
+    if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
+      initMyMap();
+    }
+  });
+</script>
