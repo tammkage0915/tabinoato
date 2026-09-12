@@ -49,8 +49,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_02_053145) do
 
   create_table "comments", force: :cascade do |t|
     t.text "body"
-    t.integer "user_id", null: false
-    t.integer "post_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "post_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_comments_on_post_id"
@@ -58,8 +58,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_02_053145) do
   end
 
   create_table "favorites", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "post_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "post_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_favorites_on_post_id"
@@ -86,7 +86,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_02_053145) do
     t.string "user_agent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "admin_id"
+    t.bigint "admin_id"
     t.index ["admin_id"], name: "index_sessions_on_admin_id"
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
