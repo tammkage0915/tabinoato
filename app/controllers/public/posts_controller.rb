@@ -39,6 +39,10 @@ end
     end
   end
 
+  def bookmarks
+    @bookmark_posts = Current.user.bookmark_posts.order(created_at: :desc)
+  end
+
   def edit
   end
 
@@ -57,6 +61,7 @@ end
     redirect_to mypage_path, status: :see_other, notice: "投稿を削除しました！"
   end
 
+
   private
 
   def set_post
@@ -70,6 +75,6 @@ end
   end
 
   def post_params
-    params.require(:post).permit(:title, :body, :address, :location_name, images: [])
+    params.require(:post).permit(:title, :body, :address, :location_name, :latitude, :longitude, images: [])
   end
 end

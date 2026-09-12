@@ -68,3 +68,6 @@ group :production do
 end
 
 gem 'kaminari','~> 1.2.1'
+
+gem 'dotenv-rails'
+gem 'geocoder'

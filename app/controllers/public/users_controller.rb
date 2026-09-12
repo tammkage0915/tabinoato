@@ -24,6 +24,8 @@ class Public::UsersController < Public::ApplicationController
 
     @posts = @user.posts.order(created_at: :desc).page(params[:page]).per(6)
 
+    @map_posts = @user.posts.where.not(latitude: nil, longitude: nil)
+
     respond_to do |format|
       format.html
       format.turbo_stream

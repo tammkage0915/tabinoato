@@ -37,8 +37,15 @@
         <i class="fa-solid fa-circle-user me-1 text-secondary"></i>
         <span><%= post.user.name %></span>
       </div>
-      <div>
-        <i class="fa-regular fa-comment me-1"></i><%= post.comments.count %>件
+      
+      <div class="d-flex align-items-center gap-3">
+        <span class="text-muted">
+          <i class="fa-regular fa-comment me-1"></i><%= post.comments.count %>件
+        </span>
+
+        <div class="position-relative z-1">
+          <%= render "public/favorites/favorite_button", post: post %>
+        </div>
       </div>
     </div>
   </div>
